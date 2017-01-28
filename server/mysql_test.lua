@@ -217,6 +217,50 @@ function MySQLTest:PlayerChat( args )
 			end
 		end
 	end
+    if cmdargs[1] == "/sellveh" then
+		if (args.player:InVehicle()==false)then
+			args.player:SendChatMessage("You are not in any vehicle!", Color(255,0,0) )
+		return end
+		for k,v in pairs(self.vid) do
+			if (veh:GetId() == self.vid[k])
+			then
+				if (tostring(args.player:GetSteamId().id) ~= tostring(self.vowner[k])) then
+					args.player:SendChatMessage("You don't have the key of this car!", Color(255,0,0) )
+				else
+					if( cmdargs[2] == nil) then
+						if(tonumber(self.sellable[k]) == 1) then
+							local result = self.sqlConnection:execute("UPDATE `jc2mp_vehicle` SET `locked` =  '0', `sellable` = '0' WHERE `ID` = " .. k)
+							if result == nil then
+								args.player:SendChatMessage("System Error! Please contact admin!", Color(255,0,0) )
+								return
+							end
+							self.vlocked[k] = 0
+							self.sellable[k] = 0
+							args.player:SendChatMessage("Your car is now not for sale.", Color(0,255,0) )
+						else
+							args.player:SendChatMessage("USAGE: /sellveh [Price]", Color(255,0,0) )
+						end
+					end
+					if( cmdargs[2] ~= nil) then
+						if(tonumber(self.sellable[k]) == 0) then
+							local price = tonumber(cmdargs[2])
+							local result = self.sqlConnection:execute("UPDATE `jc2mp_vehicle` SET `locked` =  '0', `sellable` = '1', `prize` = '" .. price .. "' WHERE  `ID` = " .. k)
+							if result == nil then
+								args.player:SendChatMessage("System Error! Please contact admin!", Color(255,0,0) )
+								return
+							end
+							self.vlocked[k] = 0
+							self.sellable[k] = 1
+							self.prize[k] = price
+							args.player:SendChatMessage("Your car is now sale with $" .. price .. ".", Color(0,255,0) )
+						else
+							args.player:SendChatMessage("Your car is alreay for sale, to cancel it, type /sellveh", Color(0,255,0) )
+						end
+					end
+				end
+			end
+		end
+	end
     if msg == "/lock" then
 		if (args.player:InVehicle()==false)then
 			args.player:SendChatMessage("You are not in any vehicle!", Color(255,0,0) )
