@@ -2,16 +2,12 @@
 
 ## Installation
 
-* Fistly make sure you have mysql installed.
+**Firstly make sure you have mysql installed.**
 
 1. Create a folder under 'scripts' folder.
 2. Put 'client' and 'server' folder into the folder that you has created just now.
-3. Open 'config.lua' of your server and find the following text:
-    ```IKnowWhatImDoing = false
-    ```
-	and change it to:
-    ```IKnowWhatImDoing = true
-    ```
+3. Open 'config.lua' of your server and find the following text <code>IKnowWhatImDoing = false</code> and change it to <code>IKnowWhatImDoing = true</code>
+
 4. Import 'jc2mp_vehicle.sql' to your mysql database
 5. Change mysql connection details at 18 line in server/mysql_test.lua
 6. Finished!
@@ -24,7 +20,7 @@
 
 The MIT License (MIT)
 
-Copyright (c) <year> <copyright holders>
+Copyright (c) 2018 HuiCheng Gaming
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
